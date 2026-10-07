@@ -1,0 +1,262 @@
+return (
+<div className="settings-page">
+<div className="settings-container">
+                                   {/* Page Header */}
+<div className="settings-header">
+<h1>Settings</h1>
+<p>Manage your account and application settings.</p>
+</div>
+
+  {/* Account Section */}
+<section className="settings-section">
+<h2>Account</h2>
+
+<div className="settings-card">
+<div className="setting-item">
+<div>
+<h3>Username</h3>
+<p>{user?.username || "Not available"}</p>
+</div>
+</div>
+
+<div className="setting-item">
+<div>
+<h3>Role</h3>
+<p>{user?.role || "Not available"}</p>
+</div>
+</div>
+
+<div className="setting-item">
+<div>
+<h3>Password</h3>
+<p>Update your account password.</p>
+</div>
+
+<button
+ type="button"
+className="secondary-button"
+onClick={openPasswordModal}
+>
+Change Password
+</button>
+</div>
+</div>
+</section>
+
+  {/* Shop Section */}
+<section className="settings-section">
+<h2>Shop</h2>
+
+<div className="settings-card">
+<div className="form-group">
+<label htmlFor="shopName">Shop Name</label>
+
+<input
+ id="shopName"
+type="text"
+value={shopName}
+onChange={handleShopNameChange}
+placeholder="Enter shop name"
+/>
+
+<small>
+ Your shop name is saved locally on this device.
+</small>
+</div>
+</div>
+</section>
+
+  {/* Admin Section */}
+{isAdmin && (
+<section className="settings-section">
+<h2>Administration</h2>
+
+<div className="settings-card">
+<div className="setting-item">
+<div>
+<h3>Manage Users</h3>
+<p>
+Add, edit and manage application users.
+</p>
+</div>
+
+<Link
+to="/settings/users"
+className="secondary-button"
+>
+Manage Users
+</Link>
+</div>
+</div>
+</section>
+)}
+
+{/* About Section */}
+<section className="settings-section">
+<h2>About</h2>
+
+<div className="settings-card">
+<div className="setting-item">
+<div>
+<h3>Application</h3>
+<p>Stock Management System</p>
+</div>
+</div>
+
+<div className="setting-item">
+<div>
+<h3>Version</h3>
+<p>1.0.0</p>
+</div>
+</div>
+</div>
+</section>
+
+  {/* Logout Section */}
+<section className="settings-section logout-section">
+<h2>Logout</h2>
+
+<div className="settings-card">
+<div>
+<h3>Sign out of your account</h3>
+<p>
+ You will need to sign in again to access the
+ application.
+</p>
+</div>
+
+<button
+ type="button"
+className="logout-button"
+onClick={handleLogout}
+>
+Logout
+</button>
+</div>
+</section>
+</div>
+
+  {/* Change Password Modal */}
+{showPasswordModal && (
+<div
+className="modal-overlay"
+onClick={closePasswordModal}
+>
+<div
+className="password-modal"
+onClick={(event) => event.stopPropagation()}
+>
+<div className="modal-header">
+<h2>Change Password</h2>
+
+<button
+type="button"
+className="close-button"
+onClick={closePasswordModal}
+    disabled={isChangingPassword}
+    aria-label="Close"
+    >
+    ×
+    </button>
+    </div>
+
+    <form onSubmit={handleChangePassword}>
+                                         {/* Current Password */}
+<div className="form-group">
+<label htmlFor="currentPassword">
+Current Password
+</label>
+
+<input
+id="currentPassword"
+type="password"
+value={currentPassword}
+    onChange={(event) =>
+setCurrentPassword(event.target.value)
+}
+    placeholder="Enter current password"
+    disabled={isChangingPassword}
+/>
+</div>
+
+{/* New Password */}
+<div className="form-group">
+<label htmlFor="newPassword">
+New Password
+</label>
+
+<input
+id="newPassword"
+type="password"
+value={newPassword}
+    onChange={(event) =>
+setNewPassword(event.target.value)
+}
+    placeholder="Enter new password"
+    disabled={isChangingPassword}
+/>
+
+<small>
+Password must contain at least 8 characters.
+</small>
+</div>
+
+{/* Confirm Password */}
+<div className="form-group">
+<label htmlFor="confirmPassword">
+Confirm New Password
+</label>
+
+<input
+id="confirmPassword"
+type="password"
+value={confirmPassword}
+    onChange={(event) =>
+setConfirmPassword(event.target.value)
+}
+    placeholder="Confirm new password"
+    disabled={isChangingPassword}
+/>
+</div>
+
+{/* Error */}
+{passwordError && (
+<div className="error-message">
+{passwordError}
+</div>
+)}
+
+{/* Success */}
+{passwordSuccess && (
+<div className="success-message">
+{passwordSuccess}
+</div>
+)}
+
+{/* Modal Actions */}
+<div className="modal-actions">
+<button
+type="button"
+className="secondary-button"
+onClick={closePasswordModal}
+    disabled={isChangingPassword}
+>
+Cancel
+</button>
+
+<button
+type="submit"
+className="primary-button"
+disabled={isChangingPassword}
+>
+{isChangingPassword
+? "Changing..."
+: "Change Password"}
+</button>
+</div>
+</form>
+</div>
+</div>
+)}
+</div>
+);

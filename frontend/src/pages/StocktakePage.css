@@ -1,0 +1,82 @@
+return (
+<main className="stocktake-page">
+<header className="page-header">
+<div>
+<h1>Stocktake</h1>
+<p>
+ Count your physical stock and correct differences between your
+ records and what is actually on the shelf.
+</p>
+</div>
+
+<button
+ type="button"
+className="primary-button"
+onClick={startNewStocktake}
+disabled={starting || Boolean(unfinishedStocktake)}
+>
+{starting ? "Starting..." : "Start New Stocktake"}
+</button>
+</header>
+
+  {error && (
+  <div className="error-banner" role="alert">
+  {error}
+  </div>
+  )}
+
+{unfinishedStocktake && (
+<section className="warning-banner" role="status">
+<div>
+<strong>You have an unfinished stocktake.</strong>
+<p>Resume it to continue counting your stock.</p>
+</div>
+
+<button
+type="button"
+onClick={() =>
+navigate(`/stocktake/${unfinishedStocktake.id}/count`)
+}
+>
+Resume
+</button>
+</section>
+)}
+
+<section className="previous-stocktakes">
+<h2>Previous Stocktakes</h2>
+
+                         {loading ? (
+    <p>Loading stocktakes...</p>
+                         ) : stocktakes.length === 0 ? (
+                         <p>No stocktakes have been started yet.</p>
+                         ) : (
+                         <div className="stocktake-list">
+                         {stocktakes.map((stocktake) => (
+                         <button
+                         key={stocktake.id}
+                             type="button"
+                             className="stocktake-row"
+                             onClick={() => handleStocktakeClick(stocktake)}
+                             disabled={stocktake.status === "CANCELLED"}
+                         >
+                         <span className="stocktake-date">
+                         {formatDate(stocktake.createdAt)}
+                         </span>
+
+                         <span
+                         className={`status-badge status-${stocktake.status.toLowerCase()}`}
+                             >
+                             {getStatusLabel(stocktake.status)}
+                         </span>
+
+                         <span className="discrepancy-count">
+                         {stocktake.discrepancyCount} discrepancies
+    </span>
+    </button>
+                         ))}
+                         </div>
+                         )}
+</section>
+</main>
+);
