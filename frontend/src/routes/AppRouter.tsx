@@ -7,6 +7,7 @@ import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
 import SalesHistoryPage from '../pages/SalesHistoryPage';
 import SaleDetailPage from '../pages/SaleDetailPage';
+import SettingsPage from '../pages/SettingsPage';
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -25,7 +26,7 @@ const AppRouter = () => (
                 <Route path="/products/:id/edit" element={<div>Edit Product</div>} />
                 <Route path="/reports" element={<div>Reports</div>} />
                 <Route path="/stocktake" element={<div>Stocktake</div>} />
-                <Route path="/settings" element={<div>Settings</div>} />
+                <Route path="/settings" element={<SettingsPage />} />
 
                 <Route element={<AdminRoute />}>
                     <Route path="/movements" element={<div>Stock Movements</div>} />
