@@ -1,4 +1,8 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import {
+    useEffect,
+    useState,
+    type FormEvent
+} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -20,10 +24,7 @@ export default function SettingsPage() {
     const [isChangingPassword, setIsChangingPassword] = useState(false);
 
     useEffect(() => {
-        const savedShopName = localStorage.getItem(SHOP_NAME_KEY);
-        if (savedShopName) {
-            setShopName(savedShopName);
-        }
+
     }, []);
 
     const handleShopNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
